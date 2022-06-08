@@ -52,16 +52,16 @@ namespace ImageViewr
                         string newFileName = SaveImageToDB(filepathfordb, originalFilenName, fileExtension);
                         ImageSelector.SaveAs(filepath + newFileName);
                         ThumbnailGenerateor(filepath, newFileName);
-                        successMsg.Text = "Successfully Uploaded !";
+             //           successMsg.Text = "Successfully Uploaded !";
                         GetAllImages();
                     }
-                    else msg.Text = "File must be png/jpg/jpeg";
+            //        else msg.Text = "File must be png/jpg/jpeg";
                 }
-                else msg.Text = "Please Select a file";
+            //    else msg.Text = "Please Select a file";
             }
             catch (Exception ex)
             {
-                msg.Text = ex.Message;
+         //       msg.Text = ex.Message;
             }
         }
 
@@ -106,6 +106,7 @@ namespace ImageViewr
             DataTable dt = new DataTable();
             sd.Fill(dt);
             dt.Columns.Remove("FilePath");
+            dt.Columns.Remove("UploadDate");
             ImageData.DataSource = dt;
             ImageData.DataBind();
         }
@@ -113,13 +114,27 @@ namespace ImageViewr
 
         protected void getFilePath(int id)
         {
-            SqlCommand query = new SqlCommand(" exec stp_GetFilePathOfSelectedIamge '" + id + "'", _connection);
+            SqlCommand query = new SqlCommand(" exec stp_GetImageWithId '" + id + "'", _connection);
             _connection.Open();
-            string path = query.ExecuteScalar().ToString();
+            SqlDataReader datareader;
+            datareader = query.ExecuteReader();
+            
+            if(datareader.Read())
+            {                       
+                string path = datareader["FilePath"].ToString();          
+                ImageOrg.ImageUrl = path;
+                string thumbnailPart = path.Replace("Original", "Thumbnail");
+                Thumbnail.ImageUrl = thumbnailPart;
+                Title.Text = datareader["FileName"].ToString();
+                UploadDate.Text = datareader["UploadDate"].ToString().Replace("12:00:00 AM","");
+                System.Drawing.Image img = System.Drawing.Image.FromFile(Server.MapPath(path));
+                width.Text = img.Width.ToString()+"px";
+                height.Text = img.Height.ToString()+"px";
+                var fileLength = new FileInfo(Server.MapPath(path)).Length;
+                float sizeofFile = Convert.ToInt32(fileLength) / 1000000;
+                size.Text = sizeofFile.ToString()+"Mb";           
+            }
             _connection.Close();
-            ImageOrg.ImageUrl = path;
-            string thumbnailPart = path.Replace("Original", "Thumbnail");
-            Thumbnail.ImageUrl = thumbnailPart;
 
         }
 

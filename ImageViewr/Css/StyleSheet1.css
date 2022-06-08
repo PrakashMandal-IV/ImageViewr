@@ -1,25 +1,116 @@
-﻿body {
-    
+﻿*{
+    font-family:Roboto;
 }
 
-.container{
-    display:flex;
-    margin-left:100pt;
-    border:1px solid black;
-
+.container {
+    margin-top: 20pt;
+    display: flex;
+    margin-left: 80pt;
+    margin-right: 80pt;
+    border: 1px solid black;
 }
 .Datatable {
-   z-index:100;
-   height:100vh;
-   overflow:auto; 
+    height: 85vh;
+    overflow-y: auto;
+    padding:2pt;
+    border: none;
+    box-shadow: 2px 2px 4px #9b9b9b;
+    border-radius: 10px;
+    margin: 10px;
+    margin-top:0;
 }
 .Grid td {
     border: solid 3px #FFFFFF;
-    margin: 3px 3px 3px 3px;
+    
     font-family: Arial;
     padding: 5px 5px 5px 5px;
     text-align: center;
 }
+.first_part{
+    display:flex;
+    flex-direction:column;
+    gap:5pt
+}
+.info {
+    display: flex;
+    width: auto;
+    border: none;
+    height:30pt;
+    align-items:center;
+    box-shadow: 2px 2px 4px #9b9b9b;
+    border-radius: 10px;
+    margin: 10px;
+    padding:5pt;
+}
+.uploadbtn{
+    border: none;
+    border-radius: 5px;
+    background-image: linear-gradient(to bottom, rgb(133, 133, 190), rgb(96, 96, 255));
+    color: white;
+    width: 70pt;
+    height: 30pt;
+    margin-left: auto;
+}
+.ImgSelector {
+    border: none;
+    background: none;
+}
+.second_part {
+    display: flex;
+    width: 45vw;
+    height:90vh;
+    margin: 10pt;
+    justify-content:center;
+    align-items: center;
+    object-fit: contain;
+    padding: 10pt;
+    padding-left:0;
+    padding-right:0;
+    border-radius: 10pt;
+}
+.imgvw{
+
+    align-self:center;
+    width:auto;
+    max-width:100%;
+    height:auto;
+    max-height:100%;
+    border-radius:10pt;
+}
+
+.third_part {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 4px #9b9b9b;
+    border-radius:10pt;
+    margin:10pt;
+    width: 20vw;
+}
+.prevw {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 80vh;
+    margin:10pt;
+    border-radius:10px;
+}
+.imginfo{
+    display:flex;
+    flex-direction:column;
+    gap:10pt;
+    font-size:14pt;
+    padding:30pt
+}
+.detail{
+    display:flex;
+}
+.ans{
+    margin-left:auto;
+    font-weight:lighter;
+}
+
+
+
 
 
 

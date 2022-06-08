@@ -1,0 +1,25 @@
+﻿body {
+    
+}
+
+.container{
+    display:flex;
+    margin-left:100pt;
+    border:1px solid black;
+
+}
+.Datatable {
+   z-index:100;
+   height:100vh;
+   overflow:auto; 
+}
+.Grid td {
+    border: solid 3px #FFFFFF;
+    margin: 3px 3px 3px 3px;
+    font-family: Arial;
+    padding: 5px 5px 5px 5px;
+    text-align: center;
+}
+
+
+

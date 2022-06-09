@@ -15,6 +15,8 @@ namespace ImageViewr
     public partial class WebForm1 : System.Web.UI.Page
     {
         SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlDatabase"].ConnectionString);
+
+       
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -52,16 +54,24 @@ namespace ImageViewr
                         string newFileName = SaveImageToDB(filepathfordb, originalFilenName, fileExtension);
                         ImageSelector.SaveAs(filepath + newFileName);
                         ThumbnailGenerateor(filepath, newFileName);
-             //           successMsg.Text = "Successfully Uploaded !";
+                        MSG.Style.Add("Color", "green");
+                        MSG.Text = "Success";
                         GetAllImages();
                     }
-            //        else msg.Text = "File must be png/jpg/jpeg";
+                    else
+                    {
+                        MSG.Style.Add("Color", "red");
+                        MSG.Text = "File must be png/jpg/jpeg";
+                    }
                 }
-            //    else msg.Text = "Please Select a file";
+                else {
+                    MSG.Style.Add("Color", "red");
+                    MSG.Text = "Please Select A file";
+                }
             }
             catch (Exception ex)
             {
-         //       msg.Text = ex.Message;
+                MSG.Text = ex.Message;
             }
         }
 
@@ -106,9 +116,10 @@ namespace ImageViewr
             DataTable dt = new DataTable();
             sd.Fill(dt);
             dt.Columns.Remove("FilePath");
-            dt.Columns.Remove("UploadDate");
+            dt.Columns.Remove("UploadDate");         
             ImageData.DataSource = dt;
             ImageData.DataBind();
+            
         }
 
 
@@ -124,7 +135,7 @@ namespace ImageViewr
                 string path = datareader["FilePath"].ToString();          
                 ImageOrg.ImageUrl = path;
                 string thumbnailPart = path.Replace("Original", "Thumbnail");
-                Thumbnail.ImageUrl = thumbnailPart;
+                Thumbnail.ImageUrl = thumbnailPart;              
                 Title.Text = datareader["FileName"].ToString();
                 UploadDate.Text = datareader["UploadDate"].ToString().Replace("12:00:00 AM","");
                 System.Drawing.Image img = System.Drawing.Image.FromFile(Server.MapPath(path));
@@ -132,15 +143,22 @@ namespace ImageViewr
                 height.Text = img.Height.ToString()+"px";
                 var fileLength = new FileInfo(Server.MapPath(path)).Length;
                 float sizeofFile = Convert.ToInt32(fileLength) / 1000000;
-                size.Text = sizeofFile.ToString()+"Mb";           
+                size.Text = sizeofFile.ToString()+"Mb";
+                titlelbl.Text = "Title:";
+                uploadDatelbl.Text = "Date:";
+                widthlbl.Text = "Width:";
+                heightlbl.Text = "Height:";
+                sizelbl.Text = "Size:";
+                
             }
             _connection.Close();
 
         }
-
+       
         protected void ThumbnailGenerateor(string filepath, string name)
         {
             Imager.PerformImageResizeAndPutOnCanvas(filepath, name, name);
         }
+
     }
 }

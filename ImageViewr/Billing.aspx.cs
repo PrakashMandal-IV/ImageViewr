@@ -1,0 +1,132 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Windows.Forms;
+
+namespace ImageViewr
+{
+    public partial class Billing : System.Web.UI.Page
+    {
+        SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlDatabase"].ConnectionString);
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(!IsPostBack)
+            {             
+                PopulateDropdown();
+                BillingDate.Text = DateTime.Now.ToShortDateString();
+            }
+        }
+
+        protected void GetUserProductList(int id)
+        {      
+            
+            SqlCommand query = new SqlCommand("exec stp_GetUserPorductList '" + id + "'", _connection);          
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Item Code");
+            dt.Columns.Add("Product Name");
+            dt.Columns.Add("Cost");
+            dt.Columns.Add("Quantity");
+            dt.Columns.Add("Amount");
+            _connection.Open();
+            SqlDataReader ProductList = query.ExecuteReader();
+            while(ProductList.Read())
+            {
+                DataRow dr = dt.NewRow();
+                dr["Item Code"] = ProductList["Id"];
+                dr["Product Name"] = ProductList["Name"];
+                dr["Cost"] = ProductList["Price"];
+                dr["Quantity"] = ProductList["Quantity"];
+                dr["Amount"] = GetProductAmount(Convert.ToInt32(ProductList["Price"]), Convert.ToInt32(ProductList["Quantity"]));
+                dt.Rows.Add(dr);
+                 
+            }
+            _connection.Close();
+            UserProductList.DataSource = dt;
+            UserProductList.DataBind();
+            GetTotalAmount();          
+        }
+        public int GetProductAmount(int price,int qty)
+        {
+            int amount = price * qty;
+            return amount;
+        }
+        public void PopulateDropdown()
+        {
+            SqlCommand query = new SqlCommand("exec stp_GetAllUser",_connection);
+            SqlDataAdapter sd = new SqlDataAdapter(query);
+            DataTable dt = new DataTable();
+            sd.Fill(dt);
+            UserDropDown.DataSource = dt;
+            UserDropDown.DataTextField = "FirstName";
+            UserDropDown.DataValueField = "Id";
+            UserDropDown.DataBind();
+            SqlCommand ProductQuery = new SqlCommand("exec stp_GetAllProduct", _connection);
+            SqlDataAdapter _sd = new SqlDataAdapter(ProductQuery);
+            DataTable _dt = new DataTable();
+            _sd.Fill(_dt);
+            ProductDropdown.DataSource = _dt;
+            ProductDropdown.DataTextField = "Name";
+            ProductDropdown.DataValueField = "Id";
+            ProductDropdown.DataBind();
+           
+        }
+
+        protected void AddProduct_Click(object sender, EventArgs e)
+        {   /*    
+            int id = Convert.ToInt32(UserDropDown.SelectedValue.ToString());
+            int productId = Convert.ToInt32(ProductDropdown.SelectedValue.ToString());
+            int quantity =Convert.ToInt32(Quantity.Text);
+            if (quantity > 0)
+            {
+                SqlCommand query = new SqlCommand("exec stp_AddProductToCart '" + id + "','" + productId + "','" + quantity + "'", _connection);
+                _connection.Open();
+                query.ExecuteNonQuery();
+                _connection.Close();
+                GetUserProductList(Convert.ToInt32( UserDropDown.SelectedValue));
+            }
+            else userMsg.Text = "Quantity cannot be less then 1";
+            */
+            GetUserProductList(Convert.ToInt32(UserDropDown.SelectedValue));
+           
+        }
+        public void GetTotalAmount()
+        {
+            int total = 0;
+            for (int i =0;i < UserProductList.Rows.Count;i++)
+            {
+                total += Convert.ToInt32(UserProductList.Rows[i].Cells[3].Text);
+            }
+            float gst = (total / 100) * 10;
+            Amount.Text ="Total : INR  "+ total.ToString() +"/-";
+            Gst.Text = "10% GST* : INR +" + gst + "/-";
+            TotalAmount.Text = "Grand Total : INR "+ Convert.ToString(gst+total) + "/-";
+        }
+
+        protected void SaveBtn_Click(object sender, EventArgs e)
+        {
+            int UserId =Convert.ToInt32( UserDropDown.SelectedValue.ToString());
+            string date = DateTime.Now.ToShortDateString();
+            int subTotal = Convert.ToInt32(TotalAmount.Text);
+            int TransectionId =  GenerateTransection(UserId,date,subTotal); //Generate Transection and return it's Id
+
+
+            
+        }
+
+        private int GenerateTransection(int UserId,string Date,int total)
+        {
+            SqlCommand query = new SqlCommand("exec stp_AddTransection '"+UserId+"','"+total+"','"+Date+"'",_connection);
+            _connection.Open();
+            int Transectionid = Convert.ToInt32(query.ExecuteScalar().ToString());
+            _connection.Close();
+
+            return Transectionid;
+        }
+    }
+    }

@@ -1,0 +1,97 @@
+﻿* {
+    font-family: Roboto;
+}
+
+.container {
+    margin-top: 100pt;
+    display: flex;
+    margin-left: 80pt;
+    margin-right: 80pt;
+    height: 400pt;
+    border: 1px solid black;
+}
+
+.first_section {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 5pt;
+}
+
+.selection, .ProductAdd {
+    display: flex;
+    margin: 50pt;
+    gap: 20pt;
+}
+
+.Input {
+    border: none;
+    background: none;
+    border-bottom: 1px solid gray;
+    width: 150pt;
+}
+
+.dateselector {
+    margin-left: auto;
+}
+
+.ProductAdd {
+    margin-top: 0;
+    margin-bottom: 0;
+    align-items: end
+}
+
+.btn {
+    border: none;
+    border-radius: 5px;
+    background-image: linear-gradient(to bottom, rgb(133, 133, 190), rgb(96, 96, 255));
+    color: white;
+    width: 70pt;
+    height: 20pt;
+    margin-left: auto;
+    transition: all ease-in 10ms;
+}
+
+    .btn:hover {
+        box-shadow: 0 0 5px rgb(96, 96, 255);
+    }
+
+.datagrid {
+    margin-top: 0;
+    align-self: center;
+}
+
+.Grid td {
+    border: solid 3px #FFFFFF;
+    font-family: Arial;
+    padding: 5px 5px 5px 5px;
+    text-align: center;
+    text-align: end;
+    border-bottom: 1px solid black;
+}
+
+.Total {
+    display: flex;
+    flex-direction: column;
+}
+
+.amountInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10pt;
+    margin-left: auto;
+    margin-right: 140pt;
+    margin-top: 20pt;
+    font-weight: lighter;
+}
+
+.infolbl {
+    margin-left: auto;
+}
+
+.total {
+    padding-top: 5pt;
+    padding-bottom: 5pt;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}

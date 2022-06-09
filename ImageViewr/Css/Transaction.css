@@ -7,21 +7,24 @@
     display: flex;
     margin-left: 80pt;
     margin-right: 80pt;
-    height: 400pt;
-    border: 1px solid black;
+    height:auto;
 }
 
-.first_section {
+.first_section,.second_section {
     display: flex;
     flex-direction: column;
     width: 50%;
     margin: 5pt;
+    box-shadow: 2px 2px 4px #9b9b9b;
+    border-radius:10px;
+    padding:10pt;
 }
 
 .selection, .ProductAdd {
     display: flex;
     margin: 50pt;
     gap: 20pt;
+    align-items: end;
 }
 
 .Input {
@@ -38,7 +41,6 @@
 .ProductAdd {
     margin-top: 0;
     margin-bottom: 0;
-    align-items: end
 }
 
 .btn {
@@ -94,4 +96,10 @@
     padding-bottom: 5pt;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
+}
+.SearchField{
+    display:flex;
+    flex-direction:column;
+    gap:10pt;
+    padding:20pt;
 }

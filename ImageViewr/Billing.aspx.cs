@@ -66,6 +66,10 @@ namespace ImageViewr
             UserDropDown.DataTextField = "FirstName";
             UserDropDown.DataValueField = "Id";
             UserDropDown.DataBind();
+            SecondUserDropdownList.DataSource = dt;
+            SecondUserDropdownList.DataTextField = "FirstName";
+            SecondUserDropdownList.DataValueField ="Id";
+            SecondUserDropdownList.DataBind();
             SqlCommand ProductQuery = new SqlCommand("exec stp_GetAllProduct", _connection);
             SqlDataAdapter _sd = new SqlDataAdapter(ProductQuery);
             DataTable _dt = new DataTable();
@@ -78,7 +82,7 @@ namespace ImageViewr
         }
 
         protected void AddProduct_Click(object sender, EventArgs e)
-        {   /*    
+        {     
             int id = Convert.ToInt32(UserDropDown.SelectedValue.ToString());
             int productId = Convert.ToInt32(ProductDropdown.SelectedValue.ToString());
             int quantity =Convert.ToInt32(Quantity.Text);
@@ -91,7 +95,7 @@ namespace ImageViewr
                 GetUserProductList(Convert.ToInt32( UserDropDown.SelectedValue));
             }
             else userMsg.Text = "Quantity cannot be less then 1";
-            */
+            
             GetUserProductList(Convert.ToInt32(UserDropDown.SelectedValue));
            
         }
@@ -100,7 +104,7 @@ namespace ImageViewr
             int total = 0;
             for (int i =0;i < UserProductList.Rows.Count;i++)
             {
-                total += Convert.ToInt32(UserProductList.Rows[i].Cells[3].Text);
+                total += Convert.ToInt32(UserProductList.Rows[i].Cells[4].Text);
             }
             float gst = (total / 100) * 10;
             Amount.Text ="Total : INR  "+ total.ToString() +"/-";
@@ -112,11 +116,19 @@ namespace ImageViewr
         {
             int UserId =Convert.ToInt32( UserDropDown.SelectedValue.ToString());
             string date = DateTime.Now.ToShortDateString();
-            int subTotal = Convert.ToInt32(TotalAmount.Text);
+            int subTotal = Convert.ToInt32(TotalAmount.Text.Replace("Grand Total : INR ","").Replace("/-",""));
             int TransectionId =  GenerateTransection(UserId,date,subTotal); //Generate Transection and return it's Id
+            //Add product to the list details
+            for (int i = 0; i < UserProductList.Rows.Count; i++)
+            {
+                int productId = Convert.ToInt32(UserProductList.Rows[i].Cells[0].Text);
+                int quantity = Convert.ToInt32(UserProductList.Rows[i].Cells[3].Text);
+                AddProductToTransectionDetails(productId,TransectionId,quantity);
+            }
+            DeleteCartItem(UserId); //Clear Current item list
+            GetUserProductList(UserId);
 
 
-            
         }
 
         private int GenerateTransection(int UserId,string Date,int total)
@@ -125,8 +137,31 @@ namespace ImageViewr
             _connection.Open();
             int Transectionid = Convert.ToInt32(query.ExecuteScalar().ToString());
             _connection.Close();
-
             return Transectionid;
         }
+        private  void AddProductToTransectionDetails(int ProductId,int TransectionId,int quantity)
+        {
+            SqlCommand query = new SqlCommand("exec stp_AddTransectionDetails '" + ProductId + "','" + TransectionId + "','" + quantity + "'", _connection);
+            _connection.Open();
+            query.ExecuteNonQuery();
+            _connection.Close();
+        }
+        private void DeleteCartItem(int UserId)
+        {
+            SqlCommand query = new SqlCommand("exec stp_DeleteProductListOnCart '" + UserId + "'", _connection);
+            _connection.Open();
+            query.ExecuteNonQuery();
+            _connection.Close();
+        }
+
+        protected void UserDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetUserProductList(Convert.ToInt32(UserDropDown.SelectedValue.ToString()));
+        }
+
+        protected void Search_Click(object sender, EventArgs e)
+        {
+            
+        }      
     }
     }

@@ -103,3 +103,9 @@
     gap:10pt;
     padding:20pt;
 }
+.Listings{
+    display:flex;
+    flex-direction:row;
+    gap:30pt;
+    margin:10pt;
+}

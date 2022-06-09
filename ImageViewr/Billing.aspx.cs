@@ -162,17 +162,88 @@ namespace ImageViewr
         protected void Search_Click(object sender, EventArgs e)
         {
             int UserId = Convert.ToInt32(SecondUserDropdownList.SelectedValue.ToString());
-            GetTransectionList(UserId);
+            string date = DateFilter.Text;
+            if (date == "")
+            {
+                GetTransectionList(UserId);
+            }
+            else GetTransectionListWithFilter(UserId, date);
+            
         }     
         private void GetTransectionList(int UserId)
         {
-            SqlCommand query = new SqlCommand(" exec stp_GetTransectioOfUser '"+UserId+"'", _connection);
+            SqlCommand query = new SqlCommand(" exec stp_GetTransectioOfUser '"+UserId+"'", _connection);         
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Id");
+            dt.Columns.Add("Total Amount");
+            dt.Columns.Add("Date");
+            _connection.Open();
+            SqlDataReader TransectionList = query.ExecuteReader();
+            if (TransectionList != null)
+            {
+                while (TransectionList.Read())
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["Id"] = TransectionList["Id"];
+                    dr["Total Amount"] = TransectionList["TotalAmount"];
+                    dr["Date"] = Convert.ToString(TransectionList["Date"]).Replace("12:00:00 AM", "");
+                    dt.Rows.Add(dr);
+
+                }
+                _connection.Close();
+                TransectionDataList.DataSource = dt;
+                TransectionDataList.DataBind();
+            }
+            else errMsg.Text = "Cannot find the record of specified User";
+          
+        }
+        private void GetTransectionListWithFilter(int UserId,string date)
+        {
+            SqlCommand query = new SqlCommand(" exec stp_GetTransectioOfUserWithFilter '" + UserId + "','"+date+ "'", _connection);
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Id");
+            dt.Columns.Add("Total Amount");
+            dt.Columns.Add("Date");
+            _connection.Open();
+            SqlDataReader TransectionList = query.ExecuteReader();
+            if (TransectionList.HasRows)
+            {
+                while (TransectionList.Read())
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["Id"] = TransectionList["Id"];
+                    dr["Total Amount"] = TransectionList["TotalAmount"];
+                    dr["Date"] = Convert.ToString(TransectionList["Date"]).Replace("12:00:00 AM", "");
+                    dt.Rows.Add(dr);
+
+                }
+                _connection.Close();
+                TransectionDataList.DataSource = dt;
+                TransectionDataList.DataBind();
+            }
+            else errMsg.Text = "Cannot find record of specified date";
+
+        }
+
+        protected void TransectionDataList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int transectionId = Convert.ToInt32(TransectionDataList.SelectedRow.Cells[1].Text);
+            GetBilledProduct(transectionId);
+        }
+        private void GetBilledProduct(int TransectId)
+        {
+            SqlCommand query = new SqlCommand(" exec stp_GetTransectionDetail '" + TransectId + "'", _connection);
             SqlDataAdapter sd = new SqlDataAdapter(query);
             DataTable dt = new DataTable();
             sd.Fill(dt);
-            dt.Columns.Remove("UserId");
-            TransectionList.DataSource = dt;
-            TransectionList.DataBind();
+            BilledProductLis.DataSource= dt;
+            BilledProductLis.DataBind();
+
+        }
+
+        protected void Clear_Click(object sender, EventArgs e)
+        {
+            DateFilter.Text = "";
         }
     }
     }

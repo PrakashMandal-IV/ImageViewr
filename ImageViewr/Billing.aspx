@@ -55,12 +55,13 @@
                     <div class="fields">
                         <label class="lbl" for="DateSelector" runat="server">User:</label>
                         <asp:TextBox ID="DateFilter" class="Input" TextMode="Date" runat="server"></asp:TextBox>
-                        <asp:Button ID="Clear" runat="server" class="btn" Text="Clear Filter" Style="margin-right: 100pt" />
+                        <asp:Button ID="Clear" runat="server" class="btn" Text="Clear Filter" OnClick="Clear_Click" Style="margin-right: 100pt" />
+                        <asp:Label ID="errMsg" runat="server" ForeColor="Red" Style="font-size: 12pt; font-weight: normal"></asp:Label>
                     </div>
                 </div>
                 <div class="Listings">
                     <div class="TransectionList">
-                         <asp:GridView ID="TransectionList" CssClass="Grid table table-condensed table-responsive table-hover" runat="server" Height="16px" Width="486px" Style="margin-right: 0px; margin-top: 29px;" GridLines="none" AllowSorting="True">
+                         <asp:GridView ID="TransectionDataList" CssClass="Grid table table-condensed table-responsive table-hover" runat="server" Height="16px" Width="300px" Style="margin-right: 0px; margin-top: 29px;" GridLines="none" OnSelectedIndexChanged="TransectionDataList_SelectedIndexChanged" AllowSorting="True">
                         <HeaderStyle BackColor="black" ForeColor="White" Font-Names="Roboto" Height="20pt" />
                         <RowStyle />
                               <Columns>
@@ -70,6 +71,13 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
+                    </asp:GridView>
+                    </div>
+                    <div class="BilledProductList">
+                         <asp:GridView ID="BilledProductLis" CssClass="Grid transsec table table-condensed table-responsive table-hover" runat="server" Height="16px" Width="300px" Style="margin-right: 0px; margin-top: 29px;" GridLines="none" OnSelectedIndexChanged="TransectionDataList_SelectedIndexChanged" AllowSorting="True">
+                        <HeaderStyle BackColor="black" ForeColor="White" Font-Names="Roboto" Height="20pt" />
+                        <RowStyle />
+                              
                     </asp:GridView>
                     </div>
                 </div>

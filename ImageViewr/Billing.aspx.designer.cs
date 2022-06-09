@@ -168,12 +168,30 @@ namespace ImageViewr
         protected global::System.Web.UI.WebControls.Button Clear;
 
         /// <summary>
-        /// TransectionList control.
+        /// errMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView TransectionList;
+        protected global::System.Web.UI.WebControls.Label errMsg;
+
+        /// <summary>
+        /// TransectionDataList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView TransectionDataList;
+
+        /// <summary>
+        /// BilledProductLis control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView BilledProductLis;
     }
 }

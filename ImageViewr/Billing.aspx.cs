@@ -161,7 +161,18 @@ namespace ImageViewr
 
         protected void Search_Click(object sender, EventArgs e)
         {
-            
-        }      
+            int UserId = Convert.ToInt32(SecondUserDropdownList.SelectedValue.ToString());
+            GetTransectionList(UserId);
+        }     
+        private void GetTransectionList(int UserId)
+        {
+            SqlCommand query = new SqlCommand(" exec stp_GetTransectioOfUser '"+UserId+"'", _connection);
+            SqlDataAdapter sd = new SqlDataAdapter(query);
+            DataTable dt = new DataTable();
+            sd.Fill(dt);
+            dt.Columns.Remove("UserId");
+            TransectionList.DataSource = dt;
+            TransectionList.DataBind();
+        }
     }
     }

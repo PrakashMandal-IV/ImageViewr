@@ -50,7 +50,7 @@
                     <div class="fields">
                         <label class="lbl" for="UserDropDown" runat="server">User:</label>
                         <asp:DropDownList ID="SecondUserDropdownList" class="Input" runat="server"></asp:DropDownList>
-                        <asp:Button ID="Search" runat="server" OnClick="Search_Click1" class="btn" Text="Go" Style="margin-right: 100pt" />
+                        <asp:Button ID="Search" runat="server" OnClick="Search_Click" class="btn" Text="Go" Style="margin-right: 100pt" />
                     </div>
                     <div class="fields">
                         <label class="lbl" for="DateSelector" runat="server">User:</label>
@@ -66,7 +66,7 @@
                               <Columns>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="ViewBtn" class="btn" runat="server" Style="border: none;transition:all ease-in 8ms; border-radius: 5px; background-image: linear-gradient(to bottom, rgb(133, 133, 190), rgb(96, 96, 255)); color: white; width: 100pt" BorderStyle="None" Text="View" Height="20px" Value='<%#Eval("Id") %>' CommandName="Select" />
+                                    <asp:Button ID="ViewBtn" class="btn" runat="server" Style="border: none;transition:all ease-in 8ms; border-radius: 5px; background-image: linear-gradient(to bottom, rgb(133, 133, 190), rgb(96, 96, 255)); color: white; width: 50pt" BorderStyle="None" Text="View" Height="20px" Value='<%#Eval("Id") %>' CommandName="Select" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

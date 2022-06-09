@@ -56,7 +56,7 @@
                         <label class="lbl" for="DateSelector" runat="server">User:</label>
                         <asp:TextBox ID="DateFilter" class="Input" TextMode="Date" runat="server"></asp:TextBox>
                         <asp:Button ID="Clear" runat="server" class="btn" Text="Clear Filter" OnClick="Clear_Click" Style="margin-right: 100pt" />
-                        <asp:Label ID="errMsg" runat="server" ForeColor="Red" Style="font-size: 12pt; font-weight: normal"></asp:Label>
+                        <asp:Label ID="errMsg" runat="server" ForeColor="Red" Style="font-size: 12pt;margin-right:auto; font-weight: normal"></asp:Label>
                     </div>
                 </div>
                 <div class="Listings">

@@ -161,15 +161,39 @@ namespace ImageViewr
 
         protected void Search_Click(object sender, EventArgs e)
         {
+            ClearDataGrid();
+
             int UserId = Convert.ToInt32(SecondUserDropdownList.SelectedValue.ToString());
+            GetCustomerName(UserId);
             string date = DateFilter.Text;
             if (date == "")
             {
                 GetTransectionList(UserId);
             }
             else GetTransectionListWithFilter(UserId, date);
-            
-        }     
+           
+        }
+        private void ClearDataGrid()
+        {
+            DataTable ds = new DataTable();
+            ds = null;
+            TransectionDataList.DataSource = ds;
+           TransectionDataList.DataBind();
+            BilledProductList.DataSource = ds;
+            BilledProductList.DataBind();
+        }
+        private void GetCustomerName(int UserId)
+        {
+            SqlCommand cmd = new SqlCommand("exec stp_GetUser '"+UserId+"'",_connection);
+            _connection.Open();
+            SqlDataReader dr;
+            dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                UserNamelbl.Text = "Customer : " + dr["FirstName"] + " " + dr["LastName"];
+            }
+            _connection.Close();
+        }
         private void GetTransectionList(int UserId)
         {
             SqlCommand query = new SqlCommand(" exec stp_GetTransectioOfUser '"+UserId+"'", _connection);         
@@ -236,8 +260,8 @@ namespace ImageViewr
             SqlDataAdapter sd = new SqlDataAdapter(query);
             DataTable dt = new DataTable();
             sd.Fill(dt);
-            BilledProductLis.DataSource= dt;
-            BilledProductLis.DataBind();
+            BilledProductList.DataSource= dt;
+            BilledProductList.DataBind();
 
         }
 

@@ -42,10 +42,11 @@
                     </div>
                 </div>
                 <div class="save" style="display: flex; margin-top: auto; margin-right: 50pt">
-                    <asp:Button ID="SaveBtn" class="btn" runat="server" Text="Save & Exit" OnClick="SaveBtn_Click" />
+                    <asp:Button ID="SaveBtn" class="btn" runat="server" Text="Checkout" OnClick="SaveBtn_Click" />
                 </div>
             </div>
             <div class="second_section">
+                 <h1 style="text-align: center">Transection Details</h1>
                 <div class="SearchField">
                     <div class="fields">
                         <label class="lbl" for="UserDropDown" runat="server">User:</label>
@@ -60,8 +61,10 @@
                     </div>
                 </div>
                 <div class="Listings">
+
                     <div class="TransectionList">
-                         <asp:GridView ID="TransectionDataList" CssClass="Grid table table-condensed table-responsive table-hover" runat="server" Height="16px" Width="300px" Style="margin-right: 0px; margin-top: 29px;" GridLines="none" OnSelectedIndexChanged="TransectionDataList_SelectedIndexChanged" AllowSorting="True">
+                         <asp:Label ID="UserNamelbl" runat="server"></asp:Label>
+                         <asp:GridView ID="TransectionDataList" CssClass="Grid table table-condensed table-responsive table-hover" runat="server" Height="16px" Width="300px" Style="margin-right: 0px; margin-top: 15px;" GridLines="none" OnSelectedIndexChanged="TransectionDataList_SelectedIndexChanged" AllowSorting="True">
                         <HeaderStyle BackColor="black" ForeColor="White" Font-Names="Roboto" Height="20pt" />
                         <RowStyle />
                               <Columns>
@@ -74,10 +77,9 @@
                     </asp:GridView>
                     </div>
                     <div class="BilledProductList">
-                         <asp:GridView ID="BilledProductLis" CssClass="Grid transsec table table-condensed table-responsive table-hover" runat="server" Height="16px" Width="300px" Style="margin-right: 0px; margin-top: 29px;" GridLines="none" OnSelectedIndexChanged="TransectionDataList_SelectedIndexChanged" AllowSorting="True">
+                         <asp:GridView ID="BilledProductList" CssClass="Grid transsec table table-condensed table-responsive table-hover" runat="server" Height="16px" Width="300px" Style="margin-right: 0px; margin-top: 29px;" GridLines="none" OnSelectedIndexChanged="TransectionDataList_SelectedIndexChanged" AllowSorting="True">
                         <HeaderStyle BackColor="black" ForeColor="White" Font-Names="Roboto" Height="20pt" />
-                        <RowStyle />
-                              
+                        <RowStyle />                            
                     </asp:GridView>
                     </div>
                 </div>

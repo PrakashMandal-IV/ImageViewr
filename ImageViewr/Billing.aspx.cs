@@ -125,7 +125,7 @@ namespace ImageViewr
             for (int i = 0; i < UserProductList.Rows.Count; i++)
             {
                 int productId = Convert.ToInt32(UserProductList.Rows[i].Cells[2].Text);
-                int quantity = Convert.ToInt32(UserProductList.Rows[i].Cells[4].Text);
+                int quantity = Convert.ToInt32(UserProductList.Rows[i].Cells[5].Text);
                 AddProductToTransectionDetails(productId,TransectionId,quantity);
             }
             DeleteCartItem(UserId); //Clear Current item list

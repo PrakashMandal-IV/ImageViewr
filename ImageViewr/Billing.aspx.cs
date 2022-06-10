@@ -20,6 +20,7 @@ namespace ImageViewr
             {             
                 PopulateDropdown();
                 BillingDate.Text = DateTime.Now.ToShortDateString();
+                DateFilter.Text = DateTime.Now.ToShortDateString();
             }
         }
 
@@ -117,7 +118,7 @@ namespace ImageViewr
         protected void SaveBtn_Click(object sender, EventArgs e)
         {
             int UserId =Convert.ToInt32( UserDropDown.SelectedValue.ToString());
-            string date = DateTime.Now.ToShortDateString();
+            string date = DateTime.Now.ToString("dd-MM-yyyy");
             int subTotal = Convert.ToInt32(TotalAmount.Text.Replace("Grand Total : INR ","").Replace("/-",""));
             int TransectionId =  GenerateTransection(UserId,date,subTotal); //Generate Transection and return it's Id
             //Add product to the list details
@@ -167,7 +168,9 @@ namespace ImageViewr
 
             int UserId = Convert.ToInt32(SecondUserDropdownList.SelectedValue.ToString());
             GetCustomerName(UserId);
-            string date = DateFilter.Text;
+            DateTime dt =Convert.ToDateTime( DateFilter.Text);
+            string date = dt.ToString("yyyy-dd-MM");
+
             if (date == "")
             {
                 GetTransectionList(UserId);

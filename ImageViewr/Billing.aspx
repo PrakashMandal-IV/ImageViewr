@@ -29,9 +29,16 @@
                     <asp:Button ID="AddProduct" runat="server" class="btn" Text="Add" OnClick="AddProduct_Click" />
                 </div>
                 <div class="datagrid">
-                    <asp:GridView ID="UserProductList" CssClass="Grid table table-condensed table-responsive table-hover" runat="server" Height="16px" Width="486px" Style="margin-right: 0px; margin-top: 29px;" GridLines="none" AllowSorting="True">
+                    <asp:GridView ID="UserProductList" CssClass="Grid table table-condensed table-responsive table-hover" runat="server"  Height="16px" Width="600px" Style="margin-right: 0px; margin-top: 29px;" GridLines="none" OnSelectedIndexChanged="UserProductList_SelectedIndexChanged" AllowSorting="True">
                         <HeaderStyle BackColor="black" ForeColor="White" Font-Names="Roboto" Height="20pt" />
                         <RowStyle />
+                           <Columns>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="DeleteBtn" class="Button" runat="server" Style="border: none;transition:all ease-in 8ms; border-radius: 5px; background-image:linear-gradient(to bottom, rgb(253, 207, 207), rgb(216, 66, 66)); color: white; width: 60pt" BorderStyle="None" Text="Remove" Height="20px" CommandName="Select" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
                     </asp:GridView>
                 </div>
                 <div class="Total">

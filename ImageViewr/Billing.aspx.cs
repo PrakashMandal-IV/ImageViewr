@@ -28,6 +28,7 @@ namespace ImageViewr
             
             SqlCommand query = new SqlCommand("exec stp_GetUserPorductList '" + id + "'", _connection);          
             DataTable dt = new DataTable();
+            dt.Columns.Add("S.No");
             dt.Columns.Add("Item Code");
             dt.Columns.Add("Product Name");
             dt.Columns.Add("Cost");
@@ -38,7 +39,8 @@ namespace ImageViewr
             while(ProductList.Read())
             {
                 DataRow dr = dt.NewRow();
-                dr["Item Code"] = ProductList["Id"];
+                dr["S.No"] = ProductList["Id"] ;
+                dr["Item Code"] = ProductList["ProductId"];
                 dr["Product Name"] = ProductList["Name"];
                 dr["Cost"] = ProductList["Price"];
                 dr["Quantity"] = ProductList["Quantity"];
@@ -48,8 +50,9 @@ namespace ImageViewr
             }
             _connection.Close();
             UserProductList.DataSource = dt;
-            UserProductList.DataBind();
-            GetTotalAmount();          
+            UserProductList.DataBind();        
+            GetTotalAmount();
+            
         }
         public int GetProductAmount(int price,int qty)
         {
@@ -76,7 +79,7 @@ namespace ImageViewr
             _sd.Fill(_dt);
             ProductDropdown.DataSource = _dt;
             ProductDropdown.DataTextField = "Name";
-            ProductDropdown.DataValueField = "Id";
+            ProductDropdown.DataValueField = "ProductId";
             ProductDropdown.DataBind();
            
         }
@@ -121,8 +124,8 @@ namespace ImageViewr
             //Add product to the list details
             for (int i = 0; i < UserProductList.Rows.Count; i++)
             {
-                int productId = Convert.ToInt32(UserProductList.Rows[i].Cells[0].Text);
-                int quantity = Convert.ToInt32(UserProductList.Rows[i].Cells[3].Text);
+                int productId = Convert.ToInt32(UserProductList.Rows[i].Cells[2].Text);
+                int quantity = Convert.ToInt32(UserProductList.Rows[i].Cells[4].Text);
                 AddProductToTransectionDetails(productId,TransectionId,quantity);
             }
             DeleteCartItem(UserId); //Clear Current item list
@@ -268,6 +271,22 @@ namespace ImageViewr
         protected void Clear_Click(object sender, EventArgs e)
         {
             DateFilter.Text = "";
+        }
+
+        protected void UserProductList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int ProductListId = Convert.ToInt32(UserProductList.SelectedRow.Cells[1].Text);
+            RemoveItemFromCart(ProductListId);
+
+        }
+        public void RemoveItemFromCart(int ListId)
+        {
+            SqlCommand query = new SqlCommand("exec stp_DeleteProductFromCart '" + ListId + "'", _connection);
+            _connection.Open();
+            query.ExecuteNonQuery();
+            _connection.Close();
+            int Id = Convert.ToInt32(UserDropDown.SelectedValue.ToString());
+            GetUserProductList(Id);
         }
     }
     }

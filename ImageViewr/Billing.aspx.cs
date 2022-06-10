@@ -46,7 +46,6 @@ namespace ImageViewr
                 dr["Quantity"] = ProductList["Quantity"];
                 dr["Amount"] = GetProductAmount(Convert.ToInt32(ProductList["Price"]), Convert.ToInt32(ProductList["Quantity"]));
                 dt.Rows.Add(dr);
-                 
             }
             _connection.Close();
             UserProductList.DataSource = dt;
@@ -110,9 +109,9 @@ namespace ImageViewr
                 total += Convert.ToInt32(UserProductList.Rows[i].Cells[4].Text);
             }
             float gst = (total / 100) * 10;
-            Amount.Text ="Total : INR  "+ total.ToString() +"/-";
-            Gst.Text = "10% GST* : INR +" + gst + "/-";
-            TotalAmount.Text = "Grand Total : INR "+ Convert.ToString(gst+total) + "/-";
+            Amount.Text ="Total : INR "+ total.ToString() +"/-";
+            Gst.Text = "10% GST* : INR " + gst + "/-";
+            TotalAmount.Text = "Grand Total : INR "+ Convert.ToString(gst+total) + "/-";           
         }
 
         protected void SaveBtn_Click(object sender, EventArgs e)

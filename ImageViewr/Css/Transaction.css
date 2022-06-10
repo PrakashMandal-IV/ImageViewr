@@ -16,7 +16,7 @@
     width: 50%;
     margin: 5pt;
     box-shadow: 2px 2px 4px #9b9b9b;
-    border-radius:10px;
+    border-radius:2px;
     padding:10pt;
 }
 
@@ -44,8 +44,7 @@
 }
 
 .btn {
-    border: none;
-    border-radius: 5px;
+    border: none;  
     background-image: linear-gradient(to bottom, rgb(133, 133, 190), rgb(96, 96, 255));
     color: white;
     width: 70pt;
@@ -53,8 +52,7 @@
     margin-left: auto;
     transition: all ease-in 10ms;
 }
-
-    .btn:hover {
+    .btn:hover, .deletebtn:hover {
         box-shadow: 0 0 5px rgb(96, 96, 255);
     }
 
@@ -82,7 +80,6 @@
     flex-direction: column;
     gap: 10pt;
     margin-left: auto;
-    margin-right: 140pt;
     margin-top: 20pt;
     font-weight: lighter;
 }
@@ -96,6 +93,7 @@
     padding-bottom: 5pt;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
+    font-weight:bold;
 }
 .SearchField{
     display:flex;
@@ -108,4 +106,16 @@
     flex-direction:row;
     gap:30pt;
     margin:10pt;
+}
+.ProductListCorner{
+    display:flex;
+    flex-direction:row;
+    align-items:flex-end;
+    gap:20pt;
+    margin:0;
+}
+.checkout {
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
 }

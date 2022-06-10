@@ -13,6 +13,7 @@
 
             <div class="first_section">
                 <h1 style="text-align: center">Billing Counter</h1>
+
                 <div class="selection">
                     <label class="lbl" for="UserDropDown" runat="server">User:</label>
                     <asp:DropDownList ID="UserDropDown" class="Input" runat="server"></asp:DropDownList>
@@ -28,6 +29,7 @@
                     <asp:TextBox ID="Quantity" type="number" class="Input" runat="server" TextMode="Number" Text="1"></asp:TextBox>
                     <asp:Button ID="AddProduct" runat="server" class="btn" Text="Add" OnClick="AddProduct_Click" />
                 </div>
+                <div class="ProductListCorner">
                 <div class="datagrid">
                     <asp:GridView ID="UserProductList" CssClass="Grid table table-condensed table-responsive table-hover" runat="server"  Height="16px" Width="600px" Style="margin-right: 0px; margin-top: 29px;" GridLines="none" OnSelectedIndexChanged="UserProductList_SelectedIndexChanged" AllowSorting="True">
                         <HeaderStyle BackColor="black" ForeColor="White" Font-Names="Roboto" Height="20pt" />
@@ -35,12 +37,13 @@
                            <Columns>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="DeleteBtn" class="Button" runat="server" Style="border: none;transition:all ease-in 8ms; border-radius: 5px; background-image:linear-gradient(to bottom, rgb(253, 207, 207), rgb(216, 66, 66)); color: white; width: 60pt" BorderStyle="None" Text="Remove" Height="20px" CommandName="Select" />
+                                    <asp:ImageButton ImageUrl="~/Icons/delete.png" ID="DeleteBtn" class="deletebtn" runat="server" Style="border: none;transition:all ease-in 8ms; border-radius: 5px; width: 25pt" BorderStyle="None" Height="30pt" CommandName="Select" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </div>
+                    <div class="checkout">
                 <div class="Total">
                     <div class="amountInfo">
                         <asp:Label ID="Amount" class="infolbl" runat="server"></asp:Label>
@@ -48,21 +51,23 @@
                         <asp:Label ID="TotalAmount" class="infolbl total" runat="server"></asp:Label>
                     </div>
                 </div>
-                <div class="save" style="display: flex; margin-top: auto; margin-right: 50pt">
+                <div class="save" style="display: flex; margin-top: 20pt;margin-right:0">
                     <asp:Button ID="SaveBtn" class="btn" runat="server" Text="Checkout" OnClick="SaveBtn_Click" />
                 </div>
+                    </div>
+                    </div>
             </div>
             <div class="second_section">
                  <h1 style="text-align: center">Transection Details</h1>
                 <div class="SearchField">
                     <div class="fields">
-                        <label class="lbl" for="UserDropDown" runat="server">User:</label>
+                        <label class="lbl" for="UserDropDown" runat="server">User : </label>
                         <asp:DropDownList ID="SecondUserDropdownList" class="Input" runat="server"></asp:DropDownList>
                         <asp:Button ID="Search" runat="server" OnClick="Search_Click" class="btn" Text="Go" Style="margin-right: 100pt" />
                     </div>
                     <div class="fields">
-                        <label class="lbl" for="DateSelector" runat="server">User:</label>
-                        <asp:TextBox ID="DateFilter" class="Input" TextMode="Date" runat="server"></asp:TextBox>
+                        <label class="lbl" for="DateSelector" runat="server">Date : </label>
+                        <asp:TextBox ID="DateFilter" class="Input" TextMode="Date"  runat="server"></asp:TextBox>
                         <asp:Button ID="Clear" runat="server" class="btn" Text="Clear Filter" OnClick="Clear_Click" Style="margin-right: 100pt" />
                         <asp:Label ID="errMsg" runat="server" ForeColor="Red" Style="font-size: 12pt;margin-right:auto; font-weight: normal"></asp:Label>
                     </div>

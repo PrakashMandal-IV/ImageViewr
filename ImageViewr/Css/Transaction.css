@@ -52,14 +52,21 @@
     margin-left: auto;
     transition: all ease-in 10ms;
 }
-    .btn:hover, .deletebtn:hover {
-        box-shadow: 0 0 5px rgb(96, 96, 255);
-    }
+.btn:hover, .deletebtn:hover {
+    box-shadow: 0 0 5px rgb(96, 96, 255);
 
-.datagrid {
-    margin-top: 0;
-    align-self: center;
 }
+.deletebtn {
+    transition: all ease-in 10ms;
+}
+.deletebtn:hover {
+    box-shadow: 0 0 5px red;
+}
+ .datagrid {
+            margin-top: 0;
+            align-self: center;
+            transition: all ease-in 10ms;
+ }
 
 .Grid td {
     border: solid 3px #FFFFFF;
@@ -86,6 +93,8 @@
 
 .infolbl {
     margin-left: auto;
+    font-family:Helvetica, sans-serif;
+    font-weight:bold;
 }
 
 .total {
@@ -118,4 +127,5 @@
     display: flex;
     flex-direction: column;
     margin-top: 35px;
+    margin-left:auto;
 }

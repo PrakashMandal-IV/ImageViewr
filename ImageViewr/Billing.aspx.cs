@@ -16,7 +16,7 @@ namespace ImageViewr
         SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlDatabase"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {             
                 PopulateDropdown();
                 BillingDate.Text = DateTime.Now.ToShortDateString();
@@ -168,14 +168,17 @@ namespace ImageViewr
 
             int UserId = Convert.ToInt32(SecondUserDropdownList.SelectedValue.ToString());
             GetCustomerName(UserId);
-            DateTime dt =Convert.ToDateTime( DateFilter.Text);
-            string date = dt.ToString("yyyy-dd-MM");
-
-            if (date == "")
+            string checkDate = DateFilter.Text;
+            if (checkDate == "")
             {
                 GetTransectionList(UserId);
             }
-            else GetTransectionListWithFilter(UserId, date);
+            else
+            {
+                DateTime dt = Convert.ToDateTime(DateFilter.Text);
+                string date = dt.ToString("yyyy-dd-MM");
+                GetTransectionListWithFilter(UserId, date);
+            }
            
         }
         private void ClearDataGrid()

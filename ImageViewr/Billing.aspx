@@ -26,7 +26,7 @@
                     <label class="lbl" for="ProductDropdown" runat="server">Product:</label>
                     <asp:DropDownList ID="ProductDropdown" class="Input" runat="server"></asp:DropDownList>
                     <label class="lbl quantity" for="quantity" runat="server">Quantity:</label>
-                    <asp:TextBox ID="Quantity" type="number" class="Input" runat="server" TextMode="Number" Text="1"></asp:TextBox>
+                    <asp:TextBox ID="Quantity" type="number" class="Input" min="0" runat="server" TextMode="Number" Text="1"></asp:TextBox>
                     <asp:Button ID="AddProduct" runat="server" class="btn" Text="Add" OnClick="AddProduct_Click" />
                 </div>
                 <div class="ProductListCorner">
@@ -47,7 +47,7 @@
                 <div class="Total">
                     <div class="amountInfo">
                         <asp:Label ID="Amount" class="infolbl" runat="server"></asp:Label>
-                        <asp:Label ID="Gst" class="infolblt" runat="server"></asp:Label>
+                        <asp:Label ID="Gst" class="infolbl" runat="server"></asp:Label>
                         <asp:Label ID="TotalAmount" class="infolbl total" runat="server"></asp:Label>
                     </div>
                 </div>
